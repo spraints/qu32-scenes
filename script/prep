@@ -1,0 +1,22 @@
+#!/bin/sh
+#/ Usage: script/prep
+#/ Untars all scenes in tar files
+
+set -e
+
+cd "$(dirname "$(dirname "$0")")"
+
+for tar in *.tar; do
+  dest=$(basename "$tar" .tar)
+  echo In $dest...
+  mkdir -p $dest
+
+  cd $dest
+  tar xfv "../$tar" --strip-components 3 "NO NAME/AHQU/SCENES"
+  for scene in *.DAT; do
+    od=$(basename $scene .DAT).od
+    od -t c -t x1 $scene >$od
+  done
+
+  cd ..
+done

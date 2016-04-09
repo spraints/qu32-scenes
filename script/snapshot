@@ -1,0 +1,16 @@
+#!/bin/sh
+#/ Usage: script/snap
+
+set -e
+
+test -d "/Volumes/NO NAME/AHQU/SCENES" || {
+  echo No scenes are available to snapshot. Insert the qu-drive USB key.
+  exit 1
+}
+
+cd "$(dirname "$(dirname "$0")")"
+root="$(pwd)"
+dest="$root/$(date +%Y-%m-%d)-scenes.tar"
+
+cd /Volumes
+tar cfv "$dest" "NO NAME/AHQU/SCENES"
